@@ -1,4 +1,4 @@
-﻿@{
+@{
     ViewBag.Title = "Explorer by DevMentor";
 
     var path = Server.MapPath("~/App_Data/");
@@ -16,7 +16,7 @@
             list.Add(info);
         }
     }
-    list = list.OrderBy(l => l.CreationTime).ToList();
+    list = list.OrderByDescending(l => l.CreationTime).ToList();
 
 }
 
@@ -56,7 +56,8 @@
                     <thead>
                         <tr>
                             <th class="col-md-2">#</th>
-                            <th class="col-md-8">Name</th>
+                            <th class="col-md-7">Name</th>
+							<th class="col-md-1">Size</th>
                             <th style="text-align:right" class="col-md-2">Action</th>
                         </tr>
                     </thead>
@@ -68,11 +69,12 @@
                                 <td>
                                     @info.FullName.Replace(path, "")
                                         
-                                    @if (info.CreationTime>=DateTime.Now.AddDays(-3))
+                                    @if (info.CreationTime>=DateTime.Now.AddDays(-1))
                                     {
                                     <label class="label label-success">NEU</label>
                                     }
                                 </td>
+								<td>@Html.Raw(info.Length/1024) kb</td>
                                 <td><a href="~/Home/Download?name=@info.FullName.Replace(path,"")" class="btn btn-success pull-right" target="_blank">Download &raquo;</a></td>
                             </tr>
                         }
